@@ -1,6 +1,3 @@
-cp -r github.com webcrawler
-cp -r golang.org webcrawler
-cd webcrawler
 docker build -t webcrawler:v1 .
 rm -rf github.com golang.org
 docker container stop $(docker container ls)
