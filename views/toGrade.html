@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>教务系统成绩查询</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <link rel="stylesheet" href="/static/css/weui.css"/>
+    <link rel="stylesheet" href="/static/css/weui2.css"/>
+    <link rel="stylesheet" href="/static/css/weui3.css"/>
+    <script src="/static/js/zepto.min.js"></script>
+    <script src="/static/js/zepto.weui.js"></script>
+</head>
+<body ontouchstart style="background-color: #f8f8f8;">
+<form class="form" role="form" method="post" action="grade">
+    <div class="weui-header bg-blue">
+        <h1 class="weui-header-title">成绩查询</h1>
+        <div class="weui-header-right">
+        </div>
+    </div>
+    <div class="weui_cells_title">
+        请输入下列信息查询成绩信息
+    </div>
+    <div class="weui_cells weui_cells_form">
+        <div class="weui_cell">
+            <div class="weui_cell_hd">
+                <label class="weui_label">用户名</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="number" pattern="[0-9]*" placeholder="请输入用户名" name="username"/>
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_hd">
+                <label class="weui_label">密码</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="password" placeholder="请输入密码" name="password"/>
+            </div>
+        </div>
+        <div class="weui_cell weui_vcode">
+            <div class="weui_cell_hd">
+                <label class="weui_label">验证码</label>
+            </div>
+            <div class="weui_cell_bd weui_cell_primary">
+                <input class="weui_input" type="text" placeholder="请输入验证码" name="yzm"/>
+            </div>
+            <div class="weui_cell_ft">
+                <i class="weui_icon_warn"></i>
+                <img class="img-responsive " alt="AHU" src="/checkCode">
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui-cell__hd">
+                <label class="weui_label">学年</label>
+            </div>
+            <div class="weui-cell__bd weui_cell_primary">
+                <input class="weui_input" id="years" type="text" placeholder="选择学年" name="year">
+            </div>
+            <div class="weui_cell_hd">
+                <label class="weui_label">学期</label>
+            </div>
+            <div class="weui-cell__bd weui_cell_primary" >
+                <input class="weui_input" id="terms" type="text" placeholder="选择学期" name="term">
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#ok').click(function () {
+            if (($('input[name=number]').val().length) == '0') {
+                $.toast("请输入用户名", "cancel");
+                return false;
+            }
+            if (($('input[name=password]').val().length) == '0') {
+                $.toast("请输入密码", "cancel");
+                return false;
+            }
+            if (($('input[name=yzm]').val().length) == '0') {
+                $.toast("请输入验证码", "cancel");
+                return false;
+            }
+        });
+
+        //console.log(getTerms());
+        function getYears() {
+            var t = new Date();
+            var year = t.getFullYear();
+            var years = new Array();
+            years[0] = year + "-" + ++year;
+            year -= 2;
+            years[1] = year + "-" + ++year;
+            year -= 2;
+            years[2] = year + "-" + ++year;
+            year -= 2
+            years[3] = year + "-" + ++year;
+            return years;
+        }
+
+        $('#years').select({
+            title: "选择学年",
+            items: getYears(),
+            onChange: function (d) {
+                console.log(this, d);
+            },
+            onClose: function () {
+                console.log("close");
+            },
+            onOpen: function () {
+                console.log("open");
+            },
+        });
+
+        $('#terms').select({
+            title: "选择学期",
+            items:["1","2","3"],
+            onChange: function (d) {
+                console.log(this, d);
+            },
+            onClose: function () {
+                console.log("close");
+            },
+            onOpen: function () {
+                console.log("open");
+            },
+        });
+
+    </script>
+    <div class="weui_btn_area">
+        <button class="weui_btn weui_btn_primary" id="ok">确定</button>
+    </div>
+    <br/>
+    <div class="weui-footer">
+        <p class="weui-footer-text">
+            Copyright © 校园微生活
+        </p>
+    </div>
+</form>
+</body>
+</html>

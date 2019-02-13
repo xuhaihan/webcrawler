@@ -1,0 +1,16 @@
+language: go
+go:
+- '1.8'
+install:
+- go get github.com/PuerkitoBio/goquery
+- go get github.com/astaxie/beego
+- go get github.com/axgle/mahonia
+go_import_path: beego-webcrawler
+before_install:
+- openssl aes-256-cbc -K $encrypted_3f4fc702ee31_key -iv $encrypted_3f4fc702ee31_iv
+  -in id_rsa.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+addons:
+  ssh_known_hosts: 119.28.187.154
+after_success:
+- ssh root@119.28.187.154 "/home/go/src/beego-webcrawler/build.sh"

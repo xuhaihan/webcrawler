@@ -1,0 +1,69 @@
+{{template "header.html" .}}
+<div class="container">
+    <form class="form-horizontal" role="form" method="post">
+        <div class="form-group">
+            <label for="inputSuccess" class="control-label">准考证号:</label>
+            <input type="text" class="form-control" id="ticket" name="ticket" >
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="control-label">姓名:</label>
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="form-group" id="code">
+            <div>
+                <tr>
+                    <label for="yzm" class="control-label">验证码:</label>
+                    <img class="img-responsive " id="yzm" alt="AHU" src="/static/code/440390181203316.png" style="height:10%;width:20%;float: right;" onclick="newCode()">
+                </tr>
+            </div>
+            <div>
+                <input type="text" class="form-control" name="yzm" autocomplete="off">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-5 col-md-offset-5">
+                <button id="query" type="button" class="btn btn-success  active" onclick="showCode()">查询</button>
+                <button id="nbt" type="submit" class="btn btn-success  active" >查询</button>
+            </div>
+        </div>
+    </form>
+    <script src="/static/js/jquery-3.2.1.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script type="application/javascript">
+        $("#nbt").hide();
+        //$("#newDiv").text(Math.random());
+        $("#code").hide();
+        function showCode() {
+            var ticket = $('#ticket').val().trim();
+            var name = $('#name').val().trim();
+            if (ticket == "" && ticket.length != 15) {
+                alert("准考证号格式输入不正确");
+                return;
+            }
+            if (name == "") {
+                alert("名字不能为空");
+                return;
+            }
+            if (ticket != "" && name != "") {
+                $.get("/getCodeUrl?ticket="+ticket,function (data) {
+                   if(data!=""){
+                       console.log(data);
+                       $("#nbt").show();
+                       $("#code").show();
+                       $("#yzm").attr("src",data);
+                       $("#query").hide();
+                   }
+                });
+            }
+        }
+        function newCode(){
+            var ticket = $('#ticket').val().trim();
+            $.get("/getCodeUrl?ticket="+ticket,function (data) {
+                if(data!=""){
+                    $("#yzm").attr("src",data);
+                }
+            });
+        }
+    </script>
+</div>
+{{template "footer.html" .}} 
