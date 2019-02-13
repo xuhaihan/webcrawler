@@ -1,6 +1,3 @@
-cd /home/go/src/webcrawler
-git pull
-cd ..
 cp -r github.com webcrawler
 cp -r golang.org webcrawler
 cd webcrawler

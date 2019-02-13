@@ -1,6 +1,6 @@
 FROM golang:1.9
 
-WORKDIR /go/src/webcrawler
+WORKDIR /root/gopath/src/webcrawler
 
 COPY . .
 COPY github.com $GOPATH/src/github.com
