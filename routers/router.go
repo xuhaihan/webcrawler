@@ -14,7 +14,7 @@ var FilterUser = func(ctx *context.Context) {
 	defer sess.SessionRelease(ctx.ResponseWriter)
 	username, ok := sess.Get("username").(string)
 	if !ok && ctx.Request.RequestURI != "/school/login" && ctx.Request.RequestURI!="/school/toGrade" {
-		ctx.Redirect(302, "/school/login")
+		//ctx.Redirect(302, "/school/login")
 	}
 	fmt.Println("用户名:" + username)
 }
