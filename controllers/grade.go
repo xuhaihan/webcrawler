@@ -149,7 +149,7 @@ func (c *MainController) QueryGrade() {
 	log.Println(username, "成绩结果页", response.Status)
 
 	grade := matchgrade(response)
-	c.Data["Name"] = decoder.ConvertString(cname)
+	c.Data["Name"] =cname
 	c.Data["Num"] = username
 	c.Data["GradeResult"] = grade
 	c.TplName = "grade.html"

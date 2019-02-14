@@ -46,7 +46,7 @@
             </div>
             <div class="weui_cell_ft">
                 <i class="weui_icon_warn"></i>
-                <img class="img-responsive " alt="AHU" src="/checkCode">
+                <img class="img-responsive " id="code" alt="AHU" src="/checkCode">
             </div>
         </div>
         <div class="weui_cell">
@@ -123,6 +123,9 @@
             },
         });
 
+         $("#code").click(function () {
+             $("#code").attr("src","/checkCode?"+Math.random());
+         })
     </script>
     <div class="weui_btn_area">
         <button class="weui_btn weui_btn_primary" id="ok">确定</button>
