@@ -81,6 +81,9 @@ func (c *MainController) QueryGrade() {
 
 	username := c.Ctx.Request.Form["username"][0]
 	cname := result.Find("#xhxm").Text()
+	cname = strings.TrimRight(cname, "同学")
+	encoder= mahonia.NewEncoder("gbk")
+	cname=encoder.ConvertString(cname)
 	sess, _ := globalSessions.SessionStart(c.Ctx.ResponseWriter, c.Ctx.Request)
 	sess.Set("username", username)
 	sess.Set("cname", cname)
