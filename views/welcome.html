@@ -23,8 +23,8 @@
                                 </li>
                                 <li>
                                     <div style="margin-top: 5%">
-                                        <button id="btn3" type="submit" class="btn btn-success active"
-                                                onclick="aevaluate()">教学评价
+                                        <button id="btn2" type="submit" class="btn btn-success active"
+                                                onclick="evaluate()">教学评价
                                         </button>
                                     </div>
                                 </li>
@@ -196,25 +196,21 @@
     </div>
 
 </div>
+<script src="/static/js/jquery-3.2.1.js"></script>
 <script type="text/javascript">
-    function grade() {
-        document.forms.sub.action = "/school/grade";
-        document.forms.sub.submit();
-        document.getElementById("btn2").disabled = true;
-        document.getElementById("waiting").style.display = "block";
-    }
 
     function credit() {
-        document.forms.sub.action = "/school/credit";
-        document.forms.sub.submit();
-        document.getElementById("btn1").disabled = true;
-        document.getElementById("waiting").style.display = "block";
+        $("#sub").attr("action","/school/credit")
+        $("#sub").submit();
+        $("#btn1").attr("disabled", true);
+        $("#waiting").show();
     }
 
-    function aevaluate() {
-        document.forms.sub.action = "/school/evaluate";
-        document.forms.sub.submit();
-        document.getElementById("btn3").disabled = true;
-        document.getElementById("waiting").style.display = "block";
+    function evaluate() {
+        $("#sub").attr("action","/school/evaluate")
+        $("#sub").submit();
+        $("#btn2").attr("disabled", true);
+        $("#waiting").show();
     }
-</script> {{template "footer.html" .}}
+</script>
+{{template "footer.html" .}}
