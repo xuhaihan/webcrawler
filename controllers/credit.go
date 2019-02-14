@@ -36,8 +36,12 @@ func (c *MainController) QueryCredit() {
 	decoder := mahonia.NewDecoder("gbk")
 	sess, _ := globalSessions.SessionStart(c.Ctx.ResponseWriter, c.Ctx.Request)
 	defer sess.SessionRelease(c.Ctx.ResponseWriter)
-	username := sess.Get("username").(string)
-	cname := sess.Get("cname").(string)
+	username,ok := sess.Get("username").(string)
+	cname,ok1:= sess.Get("cname").(string)
+	if !ok && !ok1{
+		c.TplName = "fault.html"
+		return
+	}
 	resultUrl := "http://202.116.160.170/xscjcx.aspx?xh=" + username + "&xm=" + url.QueryEscape(cname) + "&gnmkdm=N121605"
 	req, _ := http.NewRequest("GET", resultUrl, nil)
 	req.Header.Add("Referer", "http://202.116.160.170/xs_main.aspx?xh="+username)
