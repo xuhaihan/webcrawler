@@ -9,14 +9,14 @@ import (
 
 var FilterUser = func(ctx *context.Context) {
 	//username, ok := ctx.Input.Session("username").(string)
-	session:=controllers.GetSession()
+	session := controllers.GetSession()
 	sess, _ := session.SessionStart(ctx.ResponseWriter, ctx.Request)
 	defer sess.SessionRelease(ctx.ResponseWriter)
-	username,ok:=sess.Get("username").(string)
-	if !ok && ctx.Request.RequestURI != "/school/login" {
+	username, ok := sess.Get("username").(string)
+	if ok && username != "" && ctx.Request.RequestURI != "/school/login" {
 		ctx.Redirect(302, "/school/login")
 	}
-	fmt.Println("用户名:"+username)
+	fmt.Println("用户名:" + username)
 }
 
 func init() {
@@ -28,5 +28,5 @@ func init() {
 	beego.Router("/school/toGrade", &controllers.MainController{}, "get:ToGrade")
 	beego.Router("/school/credit", &controllers.MainController{}, "post:QueryCredit")
 	beego.Router("/school/cet", &controllers.MainController{}, "get:Cet;post:GetCetGrade")
-	beego.InsertFilter("/school/*",beego.BeforeRouter,FilterUser)
+	beego.InsertFilter("/school/*", beego.BeforeRouter, FilterUser)
 }
