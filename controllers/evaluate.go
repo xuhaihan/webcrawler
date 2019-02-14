@@ -11,7 +11,11 @@ import (
 	"github.com/axgle/mahonia"
 )
 
-// Evaluate 教学评价
+func (c *MainController) ToEvaluate() {
+	c.TplName = "evaluateIndex.html"
+}
+
+//教学评价
 func (c *MainController) Evaluate() {
 	//初始化client
 	var course []string

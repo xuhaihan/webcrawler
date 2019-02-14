@@ -1,0 +1,200 @@
+{{template "header.html" .}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-4 col-md-offset-4">
+            <div class="jumbotron">
+                <div class="col-xs-offset-1 col-md-offset-0">
+                    <h2 style="font-size: 25px;">校园小工具</h2>
+                </div>
+                <div class="col-xs-offset-2 col-md-offset-2">
+                    <form id="sub" class="form-inline" role="form" method="post">
+                        <input type="hidden" class="form-control" name=name value={{.Name}}>
+                        <input type="hidden" class="form-control" name=num value={{.Num}}>
+                        <div style="margin-top: 10%">
+                            <ul class="form-group" style="list-style: none;">
+                                <li style="margin-top: 5%">
+                                    <div style="margin-top: 5%">
+                                        <button id="btn1" type="submit" class="btn btn-success active"
+                                                onclick="credit()">
+                                            学分查询
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div id="waiting" class="lds-css ng-scope" style="display:none">
+                                <div style="width:100%;height:100%" class="lds-facebook">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <style type="text/css">
+                                    @keyframes lds-facebook_1 {
+                                        0% {
+                                            top: 36px;
+                                            height: 128px;
+                                        }
+
+                                        50% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+
+                                        100% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+                                    }
+
+                                    @-webkit-keyframes lds-facebook_1 {
+                                        0% {
+                                            top: 36px;
+                                            height: 128px;
+                                        }
+
+                                        50% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+
+                                        100% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+                                    }
+
+                                    @keyframes lds-facebook_2 {
+                                        0% {
+                                            top: 41.99999999999999px;
+                                            height: 116.00000000000001px;
+                                        }
+
+                                        50% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+
+                                        100% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+                                    }
+
+                                    @-webkit-keyframes lds-facebook_2 {
+                                        0% {
+                                            top: 41.99999999999999px;
+                                            height: 116.00000000000001px;
+                                        }
+
+                                        50% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+
+                                        100% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+                                    }
+
+                                    @keyframes lds-facebook_3 {
+                                        0% {
+                                            top: 48px;
+                                            height: 104px;
+                                        }
+
+                                        50% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+
+                                        100% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+                                    }
+
+                                    @-webkit-keyframes lds-facebook_3 {
+                                        0% {
+                                            top: 48px;
+                                            height: 104px;
+                                        }
+
+                                        50% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+
+                                        100% {
+                                            top: 60px;
+                                            height: 80px;
+                                        }
+                                    }
+
+                                    .lds-facebook {
+                                        position: relative;
+                                    }
+
+                                    .lds-facebook div {
+                                        position: absolute;
+                                        width: 30px;
+                                    }
+
+                                    .lds-facebook div:nth-child(1) {
+                                        left: 35px;
+                                        background: #f05125;
+                                        -webkit-animation: lds-facebook_1 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+                                        animation: lds-facebook_1 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+                                        -webkit-animation-delay: -0.2s;
+                                        animation-delay: -0.2s;
+                                    }
+
+                                    .lds-facebook div:nth-child(2) {
+                                        left: 85px;
+                                        background: #fdb813;
+                                        -webkit-animation: lds-facebook_2 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+                                        animation: lds-facebook_2 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+                                        -webkit-animation-delay: -0.1s;
+                                        animation-delay: -0.1s;
+                                    }
+
+                                    .lds-facebook div:nth-child(3) {
+                                        left: 135px;
+                                        background: #7fbb42;
+                                        -webkit-animation: lds-facebook_3 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+                                        animation: lds-facebook_3 1s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+                                    }
+
+                                    .lds-facebook {
+                                        width: 200px !important;
+                                        height: 200px !important;
+                                        -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+                                        transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+                                    }
+                                </style>
+                            </div>
+                            <div id="welcome-p">
+                                <p style="font-size: 16px;">备注:</p>
+                                <p>
+                                    1.网络忙，若未成功请稍后尝试<br>
+                                    2.学分查询较久，请耐心等候<br>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="/static/js/jquery-3.2.1.js"></script>
+<script type="text/javascript">
+    function credit() {
+        $("#waiting").hide();
+        $("#sub").submit();
+        $("#btn1").attr("disabled", true);
+        $("#waiting").show();
+    }
+</script>
+{{template "footer.html" .}}

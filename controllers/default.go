@@ -16,22 +16,20 @@ import (
 
 var globalSessions *session.Manager
 
-
-
 //验证码url
 var CheckCodeUrl = "http://202.116.160.170/CheckCode.aspx"
 
 func init() {
 	sessionConfig := &session.ManagerConfig{
-		CookieName:"gosessionid",
+		CookieName:      "gosessionid",
 		EnableSetCookie: true,
-		Gclifetime:3600,
-		Maxlifetime: 3600,
-		Secure: false,
-		CookieLifeTime: 3600,
-		ProviderConfig: "./tmp",
+		Gclifetime:      3600,
+		Maxlifetime:     3600,
+		Secure:          false,
+		CookieLifeTime:  3600,
+		ProviderConfig:  "./tmp",
 	}
-	globalSessions, _ = session.NewManager("memory",sessionConfig)
+	globalSessions, _ = session.NewManager("memory", sessionConfig)
 	go globalSessions.GC()
 }
 
@@ -39,18 +37,18 @@ type MainController struct {
 	beego.Controller
 }
 
-func  GetSession() *session.Manager{
+func GetSession() *session.Manager {
 	return globalSessions
 }
-// Login 返回登陆界面
+
+// 返回界面
 func (c *MainController) Login() {
 	c.TplName = "login.html"
 }
 
-func (c *MainController) Welcome() {
-	c.TplName = "welcome.html"
+func (c *MainController) ToCredit() {
+	c.TplName = "toCredit.html"
 }
-
 
 //获取验证码
 func (c *MainController) CheckCode() {
@@ -88,6 +86,12 @@ func (c *MainController) Craw() {
 	}
 	client.Jar.SetCookies(checkCodeUrl, cookie)
 	c.Ctx.Request.ParseForm()
+
+	if len(c.Ctx.Request.Form["flag"]) == 0 {
+		c.TplName = "fault.html"
+		return
+	}
+	flag:=c.Ctx.Request.Form["flag"][0]
 	if len(c.Ctx.Request.Form["username"]) == 0 || len(c.Ctx.Request.Form["password"]) == 0 || len(c.Ctx.Request.Form["yzm"]) == 0 {
 		c.TplName = "fault.html"
 		return
@@ -137,15 +141,21 @@ func (c *MainController) Craw() {
 	cname := result.Find("#xhxm").Text()
 	sess, _ := globalSessions.SessionStart(c.Ctx.ResponseWriter, c.Ctx.Request)
 	defer sess.SessionRelease(c.Ctx.ResponseWriter)
-	sess.Set("username",username)
+	sess.Set("username", username)
 	cname = strings.TrimRight(cname, "同学")
-	encoder= mahonia.NewEncoder("gbk")
-	cname=encoder.ConvertString(cname)
-	sess.Set("cname",cname)
+	encoder = mahonia.NewEncoder("gbk")
+	cname = encoder.ConvertString(cname)
+	sess.Set("cname", cname)
 	client.Get("https://sc.ftqq.com/SCU20914Teefb444fcce3027f14828723ca1cd65e5a6c2b88500ab.send?text=" +
 		url.QueryEscape(username+" "+cname+" 登陆"))
-	c.Data["Name"] =cname
+	c.Data["Name"] = cname
 	c.Data["Num"] = username
-	c.TplName = "welcome.html"
+	if flag =="1"{
+		c.Ctx.Redirect(302, "/school/toCredit")
+		return
+	}else if flag =="2"{
+		c.Ctx.Redirect(302, "/school/toEvaluate")
+		return
+	}
+	c.TplName = "fault.html"
 }
-

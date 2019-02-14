@@ -20,12 +20,12 @@ var FilterUser = func(ctx *context.Context) {
 }
 
 func init() {
-	beego.Router("/school/evaluate", &controllers.MainController{}, "post:Evaluate")
 	beego.Router("/school/login", &controllers.MainController{}, "get:Login;post:Craw")
+	beego.Router("/school/toCredit", &controllers.MainController{}, "get:ToCredit;post:QueryCredit")
+	beego.Router("/school/toEvaluate", &controllers.MainController{}, "get:ToEvaluate;post:Evaluate")
 	beego.Router("/checkCode", &controllers.MainController{}, "get:CheckCode")
 	beego.Router("/getCodeUrl", &controllers.MainController{}, "get:GetCodeUrl")
 	beego.Router("/school/toGrade", &controllers.MainController{}, "get:ToGrade;post:QueryGrade")
-	beego.Router("/school/credit", &controllers.MainController{}, "post:QueryCredit")
 	beego.Router("/school/cet", &controllers.MainController{}, "get:Cet;post:GetCetGrade")
 	beego.InsertFilter("/school/*", beego.BeforeRouter, FilterUser)
 }
