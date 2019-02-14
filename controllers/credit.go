@@ -47,6 +47,7 @@ func (c *MainController) QueryCredit() {
 		c.TplName = "fault.html"
 		return
 	}
+
 	log.Println(username, "学分查询页", response.Status)
 	if response.StatusCode != 200 {
 		c.TplName = "fault.html"
@@ -90,7 +91,7 @@ func (c *MainController) QueryCredit() {
 		c.TplName = "fault.html"
 		return
 	}
-	log.Println(username, cname, "学分结果页", response.Status)
+	log.Println(username, "学分结果页", response.Status)
 	ma, xf, jd := matchcredit(response)
 	c.Data["Name"] = decoder.ConvertString(cname)
 	c.Data["Num"] = username

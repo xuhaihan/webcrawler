@@ -132,13 +132,15 @@ func (c *MainController) Craw() {
 		return
 	}
 
-	log.Println(c.Ctx.Request.Form["username"][0], "登陆-主页获取成功", response.Status)
 	username := c.Ctx.Request.Form["username"][0]
+	log.Println(username, "登陆-主页获取成功", response.Status)
 	cname := result.Find("#xhxm").Text()
 	sess, _ := globalSessions.SessionStart(c.Ctx.ResponseWriter, c.Ctx.Request)
 	defer sess.SessionRelease(c.Ctx.ResponseWriter)
 	sess.Set("username",username)
 	cname = strings.TrimRight(cname, "同学")
+	encoder= mahonia.NewEncoder("gbk")
+	cname=encoder.ConvertString(cname)
 	sess.Set("cname",cname)
 	client.Get("https://sc.ftqq.com/SCU20914Teefb444fcce3027f14828723ca1cd65e5a6c2b88500ab.send?text=" +
 		url.QueryEscape(username+" "+cname+" 登陆"))

@@ -100,7 +100,7 @@ func (c *MainController) QueryGrade() {
 		return
 	}
 
-	log.Println(username, cname, "成绩查询页", response.Status)
+	log.Println(username, "成绩查询页", response.Status)
 
 	if response.StatusCode != 200 {
 		c.TplName = "fault.html"
