@@ -46,13 +46,13 @@
             }
             if (ticket != "" && name != "") {
                 $.get("/getCodeUrl?ticket="+ticket,function (data) {
-                   if(data!=""){
-                       console.log(data);
-                       $("#nbt").show();
-                       $("#code").show();
-                       $("#yzm").attr("src",data);
-                       $("#query").hide();
-                   }
+                    if(data!=""){
+                        console.log(data);
+                        $("#nbt").show();
+                        $("#code").show();
+                        $("#yzm").attr("src",data);
+                        $("#query").hide();
+                    }
                 });
             }
         }
@@ -66,4 +66,4 @@
         }
     </script>
 </div>
-{{template "footer.html" .}} 
+{{template "footer.html" .}}

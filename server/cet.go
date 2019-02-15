@@ -28,7 +28,7 @@ func Query(cookie *http.Cookie,ctx context.Context, ticket, name string,code str
 	return query.Query(cookie,ctx, ticket, name,code)
 }
 
-// Querier 提供四六级成绩查询的接口
+// 提供四六级成绩查询的接口
 type Querier interface {
 	// 根据准考证号、姓名查询
 	Query(cookie *http.Cookie,ctx context.Context, ticket, name string,code string) (*Result, error)
@@ -135,7 +135,7 @@ func (q *querier) GetCodeUrl(ctx context.Context, ticket string) (result string,
 	req.Header.Set("Referer","http://cet.neea.edu.cn/cet/")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.104 Safari/537.36")
 	req.Header.Set("Host", "neea.edu.cn")
-	req.Header.Set("X-Forwarded-For",q.randomIP())
+	req.Header.Set("X-Forwarded-For",q.GetIp())
 
 	err = q.httpDo(ctx, req, func(resp *http.Response, err error) error {
 		if err != nil {

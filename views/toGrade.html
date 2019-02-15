@@ -85,12 +85,13 @@
             var t = new Date();
             var year = t.getFullYear();
             var years = new Array();
-            years[0] = year + "-" + ++year;
+            year--;
+            years[0] =year + "-" + ++year;
             year -= 2;
             years[1] = year + "-" + ++year;
             year -= 2;
             years[2] = year + "-" + ++year;
-            year -= 2
+            year -= 2;
             years[3] = year + "-" + ++year;
             return years;
         }
