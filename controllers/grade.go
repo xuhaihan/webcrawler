@@ -44,7 +44,8 @@ func (c *MainController) QueryGrade() {
 	encoder := mahonia.NewEncoder("gbk")
 	decoder := mahonia.NewDecoder("gbk")
 	but := encoder.ConvertString("学生")
-	v.Add("__VIEWSTATE", "dDwxNTMxMDk5Mzc0Ozs+SG77OyOzybTqnYFhiAU0smy8ot4=")
+	view:=getViewState("http://202.116.160.170")
+	v.Add("__VIEWSTATE", view)
 	v.Add("txtUserName", c.Ctx.Request.Form["username"][0])
 	v.Add("TextBox2", c.Ctx.Request.Form["password"][0])
 	v.Add("txtSecretCode", c.Ctx.Request.Form["yzm"][0])
@@ -76,20 +77,16 @@ func (c *MainController) QueryGrade() {
 		c.TplName = "fault.html"
 		return
 	}
-
 	log.Println(c.Ctx.Request.Form["username"][0], "登陆-主页获取成功", response.Status)
 
 	username := c.Ctx.Request.Form["username"][0]
 	cname := result.Find("#xhxm").Text()
 	cname = strings.TrimRight(cname, "同学")
-	//encoder= mahonia.NewEncoder("gbk")
-	//cname=encoder.ConvertString(cname)
 	sess, _ := globalSessions.SessionStart(c.Ctx.ResponseWriter, c.Ctx.Request)
 	sess.Set("username", username)
 	sess.Set("cname", cname)
 	client.Get("https://sc.ftqq.com/SCU20914Teefb444fcce3027f14828723ca1cd65e5a6c2b88500ab.send?text=" +
 		url.QueryEscape(c.Ctx.Request.Form["username"][0]+" "+cname+" 登陆"))
-
 	//获取查询成绩页
 	encoder = mahonia.NewEncoder("utf-8")
 	decoder = mahonia.NewDecoder("utf-8")
@@ -102,14 +99,11 @@ func (c *MainController) QueryGrade() {
 		c.TplName = "fault.html"
 		return
 	}
-
 	log.Println(username, "成绩查询页", response.Status)
-
 	if response.StatusCode != 200 {
 		c.TplName = "fault.html"
 		return
 	}
-
 	doc = decoder.NewReader(response.Body)
 	result, _ = goquery.NewDocumentFromReader(doc)
 	view, exits := result.Find("#Form1").Find("input").Eq(2).Attr("value")
@@ -157,3 +151,5 @@ func (c *MainController) QueryGrade() {
 	c.Data["GradeResult"] = grade
 	c.TplName = "grade.html"
 }
+
+

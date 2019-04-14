@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/axgle/mahonia"
+	"fmt"
+	"log"
 )
 
 // Result 学分结果
@@ -62,4 +64,35 @@ func matchcredit(response1 *http.Response) (map[string]string, string, string) {
 	jd := result.Find("#pjxfjd").Text()
 	xf := result.Find("#xftj").Text()
 	return ma, xf, jd
+}
+
+func getViewState(url string) string{
+	client := &http.Client{}
+	request, err := http.NewRequest("GET", url, nil)
+	//增加header选项
+	request.Header.Add("Referer", "http://202.116.160.170/default2.aspx")
+	request.Header.Add("Accept", "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3")
+	request.Header.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.104 Safari/537.36")
+	if err != nil {
+		return ""
+	}
+	response, _ := client.Do(request)
+	response,_=http.Get(url)
+	defer response.Body.Close()
+	if err !=nil{
+		fmt.Println("页面解析失败")
+		return ""
+	}
+	result,err:= goquery.NewDocumentFromReader(response.Body)
+	if err != nil {
+		fmt.Println("请求登陆页失败")
+		return ""
+	}
+	viewState,exits:=result.Find("#form1").Find("input").Eq(0).Attr("value")
+	if !exits {
+		fmt.Println("__VIEWSTATE获取失败")
+		return ""
+	}
+	log.Println(viewState)
+	return viewState
 }
